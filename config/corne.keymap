@@ -9,7 +9,7 @@
 #include <dt-bindings/zmk/bt.h>
 
 
-#define AS(keycode) &as LS(keycode) keycode
+#define AS(keycode) &kp keycode
 
 / {
     chosen {
@@ -17,12 +17,12 @@
     };
 
     behaviors {
-        as: auto_shift {
+        bhm: balanced_homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping_term_ms = <200>;
-            quick_tap_ms = <0>;
-            flavor = "tap-preferred";
+            tapping-term-ms = <800>;    // <---[[moderate duration]]
+            quick-tap-ms = <0>;
+            flavor = "balanced";
             bindings = <&kp>, <&kp>;
         };
     };
@@ -31,16 +31,16 @@
 
                 default_layer {
 // -----------------------------------------------------------------------------------------
-// |  Q  |  W  |  E  |  R  |  T  |     |  Y  |  U   |  I   |  O   | P |
-// |  A  |  S  |  D  |  F  |  G  |     |  H  |  J   |  K   |  L   | ' | 
-// |  Z  |  X  |  C  |  V  |  B  |     |  N  |  M   | CTRL | META | . |
-//             | GUI | LWR | SPC |     | ENT | RSE  | BSPC |
+// |  Q  |  W  |  E   |  R  |  T  |     |  Y  |  U   |  I   |  O   | P |
+// |  A  |  S  |  D   |  F  |  G  |     |  H  |  J   |  K   |  L   | ' | 
+// |  Z  |  X  |  C   |  V  |  B  |     |  N  |  M   | CTRL | META | . |
+//             | BSPC | LWR | SPC |     | ENT | RSE  | GUI  |
                         display-name = "Base";
                         bindings = <
    AS(Q) AS(W) AS(E) AS(R) AS(T)     AS(Y)   AS(U)  AS(I)     AS(O)     AS(P)
-   AS(A) AS(S) AS(D) AS(F) AS(G)     AS(H)   AS(J)  AS(K)     AS(L)     AS(SQT)
-   AS(Z) AS(X) AS(C) AS(V) AS(B)     AS(N)   AS(M)  &kp LCTL  &kp RALT  AS(DOT)
-        &kp LGUI &mo 1 &kp SPACE     AS(RET) &mo 2  &kp BSPC
+   &bhm LCTRL A AS(S) AS(D) AS(F) AS(G)     AS(H)   AS(J)  AS(K)     AS(L)     AS(SEMI)
+   &bhm LSHIFT Z AS(X) AS(C) AS(V) AS(B)     AS(N)   AS(M)  &kp COMMA  &kp DOT &bhm RSHIFT FSLH 
+        &kp BSPC &mo 1 &kp SPACE     AS(RET) &mo 2  &kp RGUI
                         >;
                 };
 
@@ -63,14 +63,14 @@
 // -----------------------------------------------------------------------------------------
 // | 1! |  2@ |  3# |  4$ |  5% |     |  6^ |  7& |  8* |  9(  |  0)  |
 // | -_ |  =+ |  {  |  [  |  (  |     |  )  |  ]  |  }  |  /?  |  \|  |
-// | `~ |     |     |  ,< |  :  |     |  ;  |  .> | CTRL| META |      |
+// | `~ |     |     |  '" |  :  |     |  ;  |  .> | CTRL| META |      |
 //            | GUI | ESC | SPC |     | ENT |     | TAB |
                         display-name = "Raise";
                         bindings = <
 
    AS(N1)    AS(N2)    AS(N3)    AS(N4)    AS(N5)        AS(N6)    AS(N7)    AS(N8)    AS(N9)   AS(N0)
    AS(MINUS) AS(EQUAL) &kp LBRC  &kp LBKT  &kp LPAR      &kp RPAR  &kp RBKT  &kp RBRC  AS(FSLH) AS(BSLH)
-   AS(GRAVE) &trans    &trans    AS(COMMA) &kp COLON     &kp SEMI  AS(DOT)   &kp LCTRL &kp RALT &trans
+   AS(GRAVE) &trans    &trans    AS(SQT) &kp COLON     &kp SEMI  AS(DOT)   &kp LCTRL &kp RALT &trans
                        &kp LGUI  &kp ESC   &kp SPACE     AS(RET)   &trans    &kp TAB
                         >;
                 };
